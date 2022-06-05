@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Smoke Suite" parallel="none">
+    <test name="Multiple Sites">
+        <classes>
+            <class name="Day12_060422.GoogleSearch_POM"/>
+        </classes>
+    </test>
+</suite>
