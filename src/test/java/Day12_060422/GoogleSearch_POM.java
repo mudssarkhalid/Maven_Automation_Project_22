@@ -10,9 +10,9 @@ public class GoogleSearch_POM extends Reusable_Annotations {
     public void SearchForAnyKeyword(){
 
         driver.navigate().to("https://www.google.com");
-        BaseClass.googleHomePageStatic().enterUserValue("BMW");
-        BaseClass.googleHomePageStatic().clickSearch();
-        BaseClass.googleSearchResultPageStatic().getSearchResult();
-        BaseClass.googleSearchResultPageStatic().getSearchResultandSplit();
+        BaseClass.googleHomePage().enterUserValue("BMW");
+        BaseClass.googleHomePage().clickSearch();
+        BaseClass.googleSearchResultPage().getSearchResult();
+        BaseClass.googleSearchResultPage().getSearchResultandSplit();
     }//Test
 }//class
