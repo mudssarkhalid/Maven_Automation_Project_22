@@ -21,4 +21,15 @@ public class BaseClass extends Reusable_Annotations {
         return  googleSearchResultPage;
     }//end of googleSearchResultPage method
 
+    //create static reference for UBS Home Page
+    public static UBSHomePage ubsHomePage(){
+        UBSHomePage ubsHomePage = new UBSHomePage(driver);
+        return  ubsHomePage;
+    }//end of ubsHomePage method
+
+    public static UBSWealthManagementPage ubsWealthManagementPage(){
+        UBSWealthManagementPage ubsWealthManagementPage = new UBSWealthManagementPage(driver);
+        return ubsWealthManagementPage;
+    }
+
 }//parent class

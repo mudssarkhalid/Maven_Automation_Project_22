@@ -152,12 +152,20 @@ public class actionItem_6_UBS {
     }//ExploreWebManagementPage
 
     /*
+        Use Case 3
         As a UBS client, I want to be able to easily find where to log in, so that I can access my account
             * I should see a red button on the top right labeled UBS logins, with an arrow pointing down
             * When the logins button is clicked, I should see a drop-down list of available logins
      */
     @Test
     public void logIn() throws InterruptedException {
+        //start the test
+        logger = reports.startTest("Log In Test");
+
+        //navigate to UBS Wealth Management Page
+        driver.navigate().to("https://www.ubs.com/us/en/wealth-management.html");
+        //declare explicit wait
+        WebDriverWait wait = new WebDriverWait(driver,10);
 
         //confirm UBS Logins button is visible
         Reusable_Actions_Loggers.visibilityOfElement(driver,"//*[@id='headerLoginToggleButton']",logger,"Logins Button");

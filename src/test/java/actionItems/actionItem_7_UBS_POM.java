@@ -1,13 +1,11 @@
 package actionItems;
 
+import PageObjects.BaseClass;
+import PageObjects.UBSHomePage;
+import ReusableClasses.POM_Reusable_Actions_Loggers;
 import ReusableClasses.Reusable_Actions_Loggers;
 import ReusableClasses.Reusable_Annotations;
-import com.relevantcodes.extentreports.ExtentReports;
-import com.relevantcodes.extentreports.ExtentTest;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
@@ -72,17 +70,13 @@ public class actionItem_7_UBS_POM extends Reusable_Annotations {
             WebDriverWait wait = new WebDriverWait(driver,10);
             Thread.sleep(1000);
             //click on the Wealth Management tab
-            Reusable_Actions_Loggers.clickAction(driver, "//*[@aria-controls='mainmenu-navContent0']", logger, "Wealth Management Tab");
-
-            //click on drop down item
-            Reusable_Actions_Loggers.clickAction(driver, item_xpath.get(i), logger, item_name.get(i));
-            //verify URL of the opened page
-            Reusable_Actions_Loggers.verifyURLAction(driver, item_URL.get(i), logger, item_URL_name.get(i));
+            BaseClass.ubsHomePage().clickOnWealthManagement();
+            BaseClass.ubsHomePage().clickOnDropDownValue(item_xpath.get(i),item_name.get(i));
+            Reusable_Actions_Loggers.verifyURLAction(driver,item_URL.get(i),logger,item_URL_name.get(i));
         }//loop
     }//wealthManagementDropdowns
 
-
-    /*
+        /*
         Use Case 2
         As a potential UBS client, I want to be able to load the wealth management page quickly,
         and be able to navigate it fluidly
@@ -92,11 +86,9 @@ public class actionItem_7_UBS_POM extends Reusable_Annotations {
             * Clicking the pause button should pause the video and change the button to a play button
             * Clicking the play button should play the video and change the button to a pause button
      */
+
     @Test
     public void ExploreWebManagementPage() {
-        //start the test
-        logger = reports.startTest("Explore Web Management Page");
-
         //navigate to UBS Wealth Management Page
         driver.navigate().to("https://www.ubs.com/us/en/wealth-management.html");
         //declare explicit wait
@@ -112,48 +104,49 @@ public class actionItem_7_UBS_POM extends Reusable_Annotations {
         }//conditional
 
         //confirm the video header is visible
-        Reusable_Actions_Loggers.visibilityOfElement(driver,"//*[@class='fullbleedVideoWrapper']",logger,"Video Header");
+        BaseClass.ubsWealthManagementPage().headerVisible();
 
         //confirm the pause button for the video header is visible
-        Reusable_Actions_Loggers.visibilityOfElement(driver,"//*[@name='stop video']",logger,"Pause Button");
+        BaseClass.ubsWealthManagementPage().pauseButtonVisible();
 
         //click the pause button for the video header
-        Reusable_Actions_Loggers.clickAction(driver,"//*[@name='stop video']",logger,"Pause Button");
+        BaseClass.ubsWealthManagementPage().clickOnPauseButton();
 
         //confirm the pause button changes to play button on click
-        Reusable_Actions_Loggers.visibilityOfElement(driver,"//*[@name='play video']",logger,"Play Button");
+        BaseClass.ubsWealthManagementPage().playButtonVisible();
 
         //click the play button for the video header
-        Reusable_Actions_Loggers.clickAction(driver,"//*[@name='play video']",logger,"Play Button");
+        BaseClass.ubsWealthManagementPage().clickOnPlayButton();
 
         //confirm the pause button changes to pause button on click
-        Reusable_Actions_Loggers.visibilityOfElement(driver,"//*[@name='stop video']",logger,"Pause Button");
+        BaseClass.ubsWealthManagementPage().pauseButtonVisible();
 
-        //end the logger per test
-        reports.endTest(logger);
     }//ExploreWebManagementPage
 
     /*
+        Use Case 3
         As a UBS client, I want to be able to easily find where to log in, so that I can access my account
             * I should see a red button on the top right labeled UBS logins, with an arrow pointing down
             * When the logins button is clicked, I should see a drop-down list of available logins
      */
     @Test
     public void logIn() throws InterruptedException {
+        //navigate to UBS Wealth Management Page
+        driver.navigate().to("https://www.ubs.com/us/en/wealth-management.html");
+        //declare explicit wait
+        WebDriverWait wait = new WebDriverWait(driver,10);
 
         //confirm UBS Logins button is visible
-        Reusable_Actions_Loggers.visibilityOfElement(driver,"//*[@id='headerLoginToggleButton']",logger,"Logins Button");
+        BaseClass.ubsWealthManagementPage().loginsButtonVisible();
         //click on Logins Button
-        Reusable_Actions_Loggers.clickAction(driver,"//*[@id='headerLoginToggleButton']",logger,"Logins Button");
+        BaseClass.ubsWealthManagementPage().clickOnLogins();
         Thread.sleep(500);
         //confirm the Logins drop down is visible
-        Reusable_Actions_Loggers.visibilityOfElement(driver,"//*[@class='metaNav__item metaNav__item--firstLevel metaNav__item--dropdown metaNav__item--dropdownLogin js-login-wrapper menu-is-active']",logger,"Logins dropdown");
-
-        //end the logger per test
-        reports.endTest(logger);
+        BaseClass.ubsWealthManagementPage().dropDownVisible();
     }//logIns
 
     /*
+        Use Case 4
         As a potential UBS client I want to be able to easily initiate contact with UBS,
         so that I can take advantage of offered services
             * I should see a contact tab on the right of the header
@@ -163,18 +156,17 @@ public class actionItem_7_UBS_POM extends Reusable_Annotations {
 
     @Test
     public void initiateContact() throws InterruptedException {
-        logger = reports.startTest("Initiating Contact Options");
         //navigate to the UBS website
         driver.navigate().to("https://www.ubs.com/us/en/wealth-management.html");
         //confirm Contact button is visible
-        Reusable_Actions_Loggers.visibilityOfElement(driver,"//*[@class='catNav__label catNav__hl--contactIcon']",logger,"Contact button");
+        BaseClass.ubsWealthManagementPage().contactVisible();
         //click on the Contact button
-        Reusable_Actions_Loggers.clickAction(driver,"//*[@class='catNav__label catNav__hl--contactIcon']",logger,"Contact button");
+        BaseClass.ubsWealthManagementPage().clickOnContact();
         Thread.sleep(500);
         //confirm the contact drop-down is visible
-        Reusable_Actions_Loggers.visibilityOfElement(driver,"//*[@class='catNav__item catNav__item--level1 catNav__item--relative menu-is-active']",logger,"Contact drop-down");
-        // confirm visibility of drop-down elements by iterating through an array
+        BaseClass.ubsWealthManagementPage().contactDropDownVisible();
 
+        // confirm visibility of drop-down elements by iterating through an array
         //declare ArrayList for the unique xpaths of dropdown items
         ArrayList<String> item_xpath = new ArrayList<>();
         item_xpath.add("//*[text()='Get in touch']");
@@ -189,17 +181,15 @@ public class actionItem_7_UBS_POM extends Reusable_Annotations {
         item_name.add("Contact - Relationship summary");
 
         for (int i = 0; i<item_xpath.size();i++){
-            Reusable_Actions_Loggers.visibilityOfElement(driver,item_xpath.get(i),logger,item_name.get(i));
+            BaseClass.ubsWealthManagementPage().visibilityOfContactOptions(item_xpath.get(i),item_name.get(i));
         }//loop
-
-        //end the logger per test
-        reports.endTest(logger);
     }//initiateContact
 
 
 
     /*
-        5. As a potential UBS client I want to be able to submit my contact information on the Get In Touch page, so that I can be contacted by a UBS representative
+        Use Case 5
+        As a potential UBS client I want to be able to submit my contact information on the Get In Touch page, so that I can be contacted by a UBS representative
              * There should be a form of fields fillable by the visitor including, first name, last name, city, state, zip, phone, email, preferred method of contact, how much you’re interested in investing, how can a UBS advisor help you?
              * There should be a legal note drop-down which lists UBS legal note
              * The terms of use should be linked below the form, as well as the privacy statement
@@ -209,7 +199,6 @@ public class actionItem_7_UBS_POM extends Reusable_Annotations {
      */
     @Test
     public void getInTouch() {
-        logger = reports.startTest("Get In Touch Test");
         //navigate to the UBS website
         driver.navigate().to("https://www.ubs.com/us/en/wealth-management/contact-us/get-in-touch.html");
         //declare ArrayLists for the unique xpaths of dropdown items
@@ -238,13 +227,9 @@ public class actionItem_7_UBS_POM extends Reusable_Annotations {
         //iterate through drop-down elements
         for (int i=0; i<item_xpath.size();i++) {
             //verify all drop-down items are visible
-            Reusable_Actions_Loggers.visibilityOfElement(driver, item_xpath.get(i), logger, item_name.get(i));
+            BaseClass.ubsWealthManagementPage().visibilityOfContactFields(item_xpath.get(i), item_name.get(i));
         }//loop
         //verify visibility of Legal note drop-down arrow
         Reusable_Actions_Loggers.visibilityOfElement(driver, "//*[@accordion__arrowIcon']", logger, "Legal note dropdown");
-
-        //end the logger per test
-        reports.endTest(logger);
     }
-
 }//parent class

@@ -1,15 +1,21 @@
 package PageObjects;
 
+import ReusableClasses.POM_Reusable_Actions_Loggers;
 import ReusableClasses.Reusable_Annotations;
 import com.relevantcodes.extentreports.ExtentTest;
+import com.relevantcodes.extentreports.LogStatus;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public static class UBSHomePage extends Reusable_Annotations {
+public class UBSHomePage extends Reusable_Annotations {
     //declare the ExtentTest for each page object class
     ExtentTest logger;
 
@@ -23,32 +29,27 @@ public static class UBSHomePage extends Reusable_Annotations {
     }//constructor
 
     //define all the WebElements using @FindBy concept
-    //declare ArrayList for the unique xpaths of dropdown items
-    ArrayList<String> item_xpath = new ArrayList<>();
-        item_xpath.add("//*[text()='Homepage']");
-        item_xpath.add("//*[text()='Our approach']");
-        item_xpath.add("//*[text()='Who we serve']");
-        item_xpath.add("//*[text()='Specialized advice']");
-        item_xpath.add("//*[text()='Insights']");
+    @FindBy(xpath = "//*[@aria-controls='mainmenu-navContent0']")
+    WebElement wealthManagement;
 
-    ArrayList<String> item_name = new ArrayList<>();
-        item_name.add("Wealth Management Homepage");
-        item_name.add("Wealth Management Our approach");
-        item_name.add("Wealth Management Who we serve");
-        item_name.add("Wealth Management Specialized advice");
-        item_name.add("Wealth Management Insights");
+    public void clickOnWealthManagement(){
+        POM_Reusable_Actions_Loggers.clickAction(driver, wealthManagement,logger,"Wealth Management Dropdown");
+    }//class
+/*
+    public void clickOnDropDownValue(String Locator, String elementName){
+        POM_Reusable_Actions_Loggers.clickAction(driver,Locator,logger,elementName);
+    }
+    */
 
-    ArrayList<String> item_URL = new ArrayList<>();
-        item_URL.add("https://www.ubs.com/us/en/wealth-management.html");
-        item_URL.add("https://www.ubs.com/us/en/wealth-management/our-approach.html");
-        item_URL.add("https://www.ubs.com/us/en/wealth-management/who-we-serve.html");
-        item_URL.add("https://www.ubs.com/us/en/wealth-management/specialized-advice.html");
-        item_URL.add("https://www.ubs.com/us/en/wealth-management/insights.html");
+    public void clickOnDropDownValue(String xpath, String elementName){
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        try{
+            WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpath)));
+            POM_Reusable_Actions_Loggers.clickAction(driver,element,logger,xpath);
+            logger.log(LogStatus.PASS,"Successfully clicked on drop down value " + elementName);
+        } catch(Exception e){
+            logger.log(LogStatus.FAIL,"Failed to click on drop down value " + elementName + e);
+        }//exception
+    }//clickOnDropDownValue
 
-    ArrayList<String> item_URL_name = new ArrayList<>();
-        item_URL_name.add("Wealth Management Homepage URL");
-        item_URL_name.add("Wealth Management Our approach URL");
-        item_URL_name.add("Wealth Management Who we serve URL");
-        item_URL_name.add("Wealth Management Specialized advice URL");
-        item_URL_name.add("Wealth Management Insights URL");
 }//class
